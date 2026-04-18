@@ -1,0 +1,624 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#f9a8d4;--pk:#fce7f3;--pm:#ec4899;
+  --lm:#a855f7;--lv:#e9d5ff;
+  --mm:#22c55e;--mt:#bbf7d0;
+  --sm:#0ea5e9;--sk:#bae6fd;
+  --om:#f97316;--ot:#fed7aa;
+  --cream:#fff8f0;--text:#4a3f5c;--tl:#8b7ba0;
+  --bd:rgba(180,150,200,0.2);--sh:rgba(180,100,180,0.1);
+}
+body{font-family:'Nunito',sans-serif;color:var(--text);background:var(--cream)}
+.app{max-width:900px;margin:0 auto;padding:0 16px 100px}
+
+.header{text-align:center;padding:28px 16px 20px;background:linear-gradient(160deg,#fce7f3,#ede9fe 50%,#dbeafe);margin:0 -16px 24px;border-bottom:2px solid rgba(200,150,220,0.2)}
+.hbrand{font-family:'Pacifico',cursive;font-size:32px;color:#c026d3;cursor:pointer;user-select:none}
+.hhandle{font-size:12px;color:var(--lm);font-weight:600;letter-spacing:2px;margin-bottom:6px}
+.htag{font-size:13px;color:var(--tl);margin-top:4px}
+.hbadges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:12px}
+.badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:white;border:1.5px solid rgba(200,150,220,0.4);color:var(--lm)}
+.badge.g{color:var(--mm);border-color:rgba(34,197,94,0.3)}
+.badge.p{color:var(--pm);border-color:rgba(236,72,153,0.3)}
+
+.nav{display:flex;gap:6px;margin-bottom:20px;background:white;border-radius:16px;padding:6px;border:1px solid var(--bd);box-shadow:0 2px 12px var(--sh)}
+.nbtn{flex:1;padding:9px 6px;border:none;background:transparent;border-radius:12px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;color:var(--tl);transition:all .2s}
+.nbtn.on{background:linear-gradient(135deg,#f9a8d4,#c084fc);color:white}
+.nbtn:hover:not(.on){background:var(--pk)}
+
+.sec{display:none}.sec.on{display:block}
+
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.pcard{background:white;border-radius:20px;border:1.5px solid var(--bd);overflow:hidden;transition:all .2s;box-shadow:0 2px 12px var(--sh)}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(180,100,200,.15);border-color:var(--pink)}
+.pcard-img{width:100%;height:180px;object-fit:cover;object-position:center top}
+.pcard-ph{height:180px;background:linear-gradient(135deg,#fce7f3,#ede9fe);display:flex;align-items:center;justify-content:center;font-size:56px}
+.pb{padding:12px 16px 16px}
+.pn{font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px}
+.ps{font-size:11px;color:var(--tl);margin-bottom:10px}
+.variants{display:flex;flex-direction:column;gap:6px}
+.vrow{display:flex;align-items:center;justify-content:space-between;background:var(--pk);border-radius:10px;padding:6px 10px;border:1.5px solid transparent;transition:all .15s}
+.vrow.on{border-color:var(--pm);background:#fce7f3}
+.vsize{font-size:12px;font-weight:700}
+.vprice{font-size:13px;font-weight:800;color:var(--pm)}
+.vq{display:flex;align-items:center;gap:6px}
+.qb{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--pm);background:white;color:var(--pm);font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.qn{font-size:13px;font-weight:700;min-width:16px;text-align:center}
+.clrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;flex-shrink:0}
+.chip.on{border-color:var(--pm);box-shadow:0 0 0 2px white,0 0 0 4px var(--pm)}
+.clbl{font-size:10px;color:var(--tl);margin-top:4px}
+
+.emb-box{background:linear-gradient(135deg,#fce7f3,#ede9fe);border-radius:16px;padding:16px;margin-top:20px;border:1.5px solid rgba(200,150,220,.3)}
+.emb-t{font-size:13px;font-weight:800;color:var(--lm);margin-bottom:10px}
+.emb-opts{display:flex;gap:10px}
+.emb-o{flex:1;background:white;border-radius:10px;padding:10px;border:1.5px solid transparent;cursor:pointer;text-align:center;transition:all .15s}
+.emb-o.on{border-color:var(--pm)}
+.emb-ol{font-size:12px;font-weight:700}
+.emb-op{font-size:11px;color:var(--tl);margin-top:2px}
+.emb-inp{width:100%;margin-top:12px;padding:10px 14px;border-radius:10px;border:1.5px solid rgba(200,150,220,.4);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);background:white;outline:none}
+.emb-inp:focus{border-color:var(--pm)}
+.n2row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+
+.addon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.acard{background:white;border-radius:14px;padding:12px 10px;text-align:center;border:1.5px solid var(--bd);cursor:pointer;transition:all .15s}
+.acard:hover,.acard.on{border-color:var(--lm);background:#f5f3ff}
+.aemoji{font-size:28px;margin-bottom:4px}
+.aname{font-size:11px;font-weight:700;color:var(--text)}
+.aprice{font-size:12px;font-weight:800;color:var(--lm);margin-top:2px}
+
+/* Thread color picker — shown inside Thread Color Upgrade card */
+.thread-picker{margin-top:10px;border-top:1px solid var(--bd);padding-top:10px;display:none}
+.thread-picker.open{display:block}
+.tp-label{font-size:11px;font-weight:700;color:var(--tl);margin-bottom:8px}
+.tcolors{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.tcol{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;flex-shrink:0}
+.tcol.on{border-color:var(--text);box-shadow:0 0 0 2px white,0 0 0 4px rgba(0,0,0,.3)}
+
+.delbox{background:white;border-radius:16px;padding:16px;border:1.5px solid var(--bd);margin-top:20px}
+.dopt{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;cursor:pointer;border:1.5px solid transparent;margin-bottom:8px;transition:all .15s}
+.dopt.on{border-color:var(--sm);background:#f0f9ff}
+.dopt input[type=radio]{accent-color:var(--sm);width:16px;height:16px}
+.dlbl{font-size:13px;font-weight:700}
+.dprice{font-size:12px;color:var(--tl);margin-left:auto}
+
+.cart-bar{position:sticky;bottom:0;background:white;border-top:1.5px solid var(--bd);padding:14px 16px;margin:0 -16px;box-shadow:0 -4px 20px var(--sh);display:flex;align-items:center;justify-content:space-between;z-index:10}
+.ctotal{font-size:22px;font-weight:800;color:var(--pm)}
+.ccnt{font-size:11px;color:var(--tl)}
+.gbtn{background:linear-gradient(135deg,#f472b6,#a855f7);color:white;border:none;border-radius:16px;padding:12px 24px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s}
+.gbtn:hover{transform:scale(1.03)}
+.gbtn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+.fcard{background:white;border-radius:20px;padding:20px;border:1.5px solid var(--bd);margin-bottom:16px;box-shadow:0 2px 12px var(--sh)}
+.ftit{font-size:14px;font-weight:800;color:var(--text);margin-bottom:14px}
+.frow{margin-bottom:12px}
+.flbl{font-size:11px;font-weight:700;color:var(--tl);margin-bottom:4px;display:block;letter-spacing:.5px;text-transform:uppercase}
+.finp,.fta{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid rgba(200,150,220,.3);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);background:white;outline:none}
+.finp:focus,.fta:focus{border-color:var(--pm)}
+.fta{min-height:70px;resize:vertical}
+
+.paybox{background:linear-gradient(135deg,#fce7f3,#ede9fe);border-radius:16px;padding:18px;margin-bottom:16px;border:1.5px solid rgba(200,150,220,.3)}
+.paycard{background:white;border-radius:12px;padding:14px 16px;border:2px solid rgba(190,100,200,.25)}
+.prow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:.5px solid var(--bd);font-size:13px}
+.prow:last-child{border-bottom:none}
+.pkey{color:var(--tl);font-weight:600}
+.pval{font-weight:800}
+.pacc{font-size:18px;font-weight:800;color:var(--pm);letter-spacing:1px}
+.cpbtn{background:var(--lv);border:none;border-radius:8px;padding:3px 10px;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;color:var(--lm);cursor:pointer;margin-left:8px}
+.pnote{font-size:11px;color:var(--tl);margin-top:10px;line-height:1.5}
+
+.upbox{border:2px dashed rgba(200,150,220,.4);border-radius:14px;padding:24px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.upbox:hover{border-color:var(--pm);background:var(--pk)}
+.upinput{position:absolute;inset:0;opacity:0;cursor:pointer}
+.upprev{max-width:100%;max-height:200px;border-radius:10px;margin-top:10px;display:none}
+
+.oline{display:flex;justify-content:space-between;padding:6px 0;border-bottom:.5px solid var(--bd);font-size:13px}
+.oline:last-child{border-bottom:none}
+.oline.tot{font-weight:800;font-size:15px;color:var(--pm);padding-top:10px;border-top:1.5px solid var(--bd)}
+
+/* THE ONE submit button */
+.submit-btn{width:100%;background:linear-gradient(135deg,#f472b6,#a855f7);color:white;border:none;border-radius:16px;padding:14px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;margin-top:8px;transition:all .2s}
+.submit-btn:hover{transform:scale(1.01)}
+
+.tcard2{background:white;border-radius:20px;padding:20px;border:1.5px solid var(--bd);box-shadow:0 2px 12px var(--sh)}
+.trow{display:flex;gap:8px}
+.trow input{flex:1;margin-bottom:0 !important}
+.tbtn{background:linear-gradient(135deg,#f472b6,#a855f7);color:white;border:none;border-radius:10px;padding:10px 16px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap}
+.step{display:flex;gap:12px;margin-bottom:4px}
+.dcol{display:flex;flex-direction:column;align-items:center}
+.dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+.dot.dn{background:var(--mt);color:var(--mm);border:2px solid var(--mm)}
+.dot.ac{background:var(--pk);color:var(--pm);border:2px solid var(--pm)}
+.dot.pd{background:#f1f5f9;color:#94a3b8;border:2px solid #e2e8f0}
+.sl{flex:1;width:2px;background:#e2e8f0;margin:2px 0;min-height:20px}
+.sl.dn{background:var(--mm)}
+.si{padding-bottom:20px}
+.slab{font-size:13px;font-weight:700}
+.stm{font-size:11px;color:var(--tl);margin-top:2px}
+.pill{display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700}
+.pg{background:var(--mt);color:var(--mm)}
+.py{background:var(--ot);color:var(--om)}
+.pb2{background:var(--sk);color:var(--sm)}
+.pp{background:var(--pk);color:var(--pm)}
+
+.lwrap{display:flex;flex-direction:column;align-items:center;padding:40px 20px}
+.lcard{background:white;border-radius:20px;padding:32px 24px;border:1.5px solid var(--bd);box-shadow:0 4px 24px var(--sh);width:100%;max-width:340px;text-align:center}
+.linp{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid rgba(200,150,220,.4);font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;text-align:center;letter-spacing:2px;margin-bottom:12px}
+.linp:focus{border-color:var(--pm)}
+.lbtn{width:100%;background:linear-gradient(135deg,#f472b6,#a855f7);color:white;border:none;border-radius:12px;padding:12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer}
+.lerr{font-size:12px;color:#dc2626;margin-top:8px;display:none}
+
+.metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.metric{background:white;border-radius:16px;padding:16px;border:1.5px solid var(--bd);box-shadow:0 2px 12px var(--sh)}
+.ml{font-size:11px;font-weight:700;color:var(--tl);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.mv{font-size:26px;font-weight:800}
+.ms{font-size:11px;color:var(--mm);font-weight:600;margin-top:2px}
+.atable{background:white;border-radius:16px;overflow:hidden;border:1.5px solid var(--bd);box-shadow:0 2px 12px var(--sh);margin-bottom:16px}
+.ahead{padding:14px 16px;font-size:13px;font-weight:800;border-bottom:1px solid var(--bd);background:var(--cream);display:flex;justify-content:space-between;align-items:center}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:10px 16px;color:var(--tl);font-weight:700;font-size:11px;letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--bd)}
+td{padding:10px 16px;border-bottom:.5px solid var(--bd)}
+tr:last-child td{border-bottom:none}
+.ubtn{background:linear-gradient(135deg,#bae6fd,#a5b4fc);color:#1e3a5f;border:none;border-radius:8px;padding:5px 12px;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;cursor:pointer}
+.brow{display:flex;align-items:center;gap:10px}
+.blbl{font-size:12px;font-weight:700;width:110px;flex-shrink:0}
+.btrack{flex:1;background:#f1f5f9;border-radius:8px;height:16px;overflow:hidden}
+.bfill{height:100%;border-radius:8px}
+.bcnt{font-size:12px;font-weight:700;color:var(--tl);width:30px;text-align:right}
+.logbtn{background:transparent;border:1.5px solid rgba(200,150,220,.4);border-radius:8px;padding:5px 12px;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;color:var(--tl);cursor:pointer}
+.note{background:var(--lv);border-radius:12px;padding:12px 14px;font-size:12px;color:#5b21b6;font-weight:600;margin-bottom:14px}
+.sectit{font-family:'Pacifico',cursive;font-size:18px;color:var(--lm);margin-bottom:14px}
+.succ{background:linear-gradient(135deg,#bbf7d0,#a7f3d0);border:1.5px solid var(--mm);border-radius:16px;padding:20px;text-align:center;margin-bottom:20px;display:none}
+</style>
+
+<div class="app">
+  <div class="header">
+    <div class="hhandle">@stitchstudioo_</div>
+    <div class="hbrand" id="logo" title="5× tap for admin">Plush Palace</div>
+    <div class="htag">Personalised plushies, made with love</div>
+    <div class="hbadges">
+      <span class="badge g">FREE delivery (West MY)</span>
+      <span class="badge">Sabah & Sarawak +RM15</span>
+      <span class="badge p">FREE name embroidery (1 ear)</span>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nbtn on" onclick="showSec('shop')">Shop</button>
+    <button class="nbtn" onclick="showSec('checkout')">Checkout</button>
+    <button class="nbtn" onclick="showSec('track')">Track Order</button>
+  </div>
+
+  <!-- SHOP -->
+  <div class="sec on" id="sec-shop">
+    <div class="sectit">Choose your plushie</div>
+    <div class="pgrid" id="pgrid"></div>
+
+    <div class="emb-box" style="margin-top:24px">
+      <div class="emb-t">Name Embroidery</div>
+      <div class="emb-opts">
+        <div class="emb-o on" id="e1" onclick="selEmb('1ear')"><div class="emb-ol">1 Ear</div><div class="emb-op">FREE</div></div>
+        <div class="emb-o" id="e2" onclick="selEmb('2ear')"><div class="emb-ol">2 Ears</div><div class="emb-op">+RM15</div></div>
+      </div>
+      <div id="enames">
+        <input class="emb-inp" id="ename1" placeholder="Name to embroider (e.g. Mia)" maxlength="14" oninput="upd()">
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <div class="sectit">Add-ons <span style="font-size:13px;color:var(--tl);font-family:'Nunito',sans-serif;font-weight:600">+RM8 each</span></div>
+      <div class="note">Each add-on is RM8. Thread Color Upgrade lets you choose your embroidery thread colour (standard is black).</div>
+      <div class="addon-grid" id="agrid"></div>
+    </div>
+
+    <div class="delbox">
+      <div class="ftit">Delivery Zone</div>
+      <div class="dopt on" id="dw" onclick="selDel('west',0)">
+        <input type="radio" name="del" checked><span class="dlbl">West Malaysia</span><span class="dprice">FREE</span>
+      </div>
+      <div class="dopt" id="de" onclick="selDel('east',15)">
+        <input type="radio" name="del"><span class="dlbl">Sabah & Sarawak</span><span class="dprice">+RM15</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT -->
+  <div class="sec" id="sec-checkout">
+    <div class="succ" id="succ">
+      <div style="font-size:40px;margin-bottom:8px">🎀</div>
+      <div style="font-size:18px;font-weight:800;color:#065f46">Order Placed!</div>
+      <div style="font-size:13px;color:#047857;margin-top:4px">We'll process it once payment is verified. Track your order with your email!</div>
+    </div>
+    <div id="coform">
+      <div class="fcard">
+        <div class="ftit">Order Summary</div>
+        <div id="sumlines"></div>
+      </div>
+      <div class="paybox">
+        <div class="emb-t">Bank Transfer</div>
+        <div class="paycard">
+          <div class="prow"><span class="pkey">Bank</span><span class="pval">Hong Leong Bank</span></div>
+          <div class="prow"><span class="pkey">Account Name</span><span class="pval">RK Sneaker Enterprise</span></div>
+          <div class="prow"><span class="pkey">Account No.</span><span style="display:flex;align-items:center"><span class="pacc">12000059657</span><button class="cpbtn" onclick="copyAcc()">Copy</button></span></div>
+        </div>
+        <div class="pnote">Transfer the amount and upload your receipt below so we can start preparing your plushie!</div>
+      </div>
+      <div class="fcard">
+        <div class="ftit">Your Details</div>
+        <div class="frow"><label class="flbl">Full Name</label><input class="finp" id="cn" placeholder="e.g. Aisyah Binti Ahmad"></div>
+        <div class="frow"><label class="flbl">Email</label><input class="finp" id="ce" placeholder="e.g. aisyah@email.com" type="email"></div>
+        <div class="frow"><label class="flbl">Phone (WhatsApp)</label><input class="finp" id="cp" placeholder="e.g. 0123456789"></div>
+        <div class="frow"><label class="flbl">Delivery Address</label><textarea class="fta" id="ca" placeholder="Full address including postcode & state"></textarea></div>
+      </div>
+      <div class="fcard">
+        <div class="ftit">Upload Receipt</div>
+        <div class="upbox">
+          <input type="file" class="upinput" accept="image/*,.pdf" onchange="prevUp(this)">
+          <div style="font-size:32px;margin-bottom:8px">🧾</div>
+          <div id="uptxt" style="font-size:13px;font-weight:700">Tap to upload receipt</div>
+          <div style="font-size:11px;color:var(--tl);margin-top:4px">PNG, JPG or PDF</div>
+          <img id="upprev" class="upprev">
+        </div>
+      </div>
+      <!-- SINGLE submit button -->
+      <button class="submit-btn" onclick="submitOrder()">Place Order</button>
+    </div>
+  </div>
+
+  <!-- TRACK -->
+  <div class="sec" id="sec-track">
+    <div class="tcard2">
+      <div class="ftit">Track Your Order</div>
+      <div class="trow" style="margin-bottom:0">
+        <input class="finp" id="tinput" placeholder="Enter email or order ID" style="margin-bottom:0">
+        <button class="tbtn" onclick="trackOrd()">Track</button>
+      </div>
+      <div id="tres" style="margin-top:20px;display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div>
+            <div style="font-size:12px;color:var(--tl)">Order</div>
+            <div style="font-size:15px;font-weight:800" id="tid"></div>
+          </div>
+          <div id="tpill"></div>
+        </div>
+        <div style="font-size:12px;color:var(--tl);margin-bottom:4px">Tracking number</div>
+        <div style="font-size:14px;font-weight:700;color:var(--sm);margin-bottom:16px" id="tnum">—</div>
+        <div id="ttl"></div>
+      </div>
+      <div id="tempty" style="margin-top:20px;display:none;text-align:center;color:var(--tl);font-size:13px">No order found. Check your email or order ID.</div>
+    </div>
+  </div>
+
+  <!-- ADMIN (hidden) -->
+  <div class="sec" id="sec-backend">
+    <div id="alockwrap" class="lwrap">
+      <div class="lcard">
+        <div style="font-size:40px;margin-bottom:12px">🔐</div>
+        <div style="font-family:'Pacifico',cursive;font-size:20px;color:var(--lm);margin-bottom:6px">Admin Only</div>
+        <div style="font-size:12px;color:var(--tl);margin-bottom:20px">Enter password to continue</div>
+        <input class="linp" type="password" id="lpw" placeholder="••••••••" onkeydown="if(event.key==='Enter')unlock()">
+        <button class="lbtn" onclick="unlock()">Unlock</button>
+        <div class="lerr" id="lerr">Incorrect password.</div>
+      </div>
+    </div>
+    <div id="acont" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <div class="note" style="margin-bottom:0;flex:1;margin-right:10px">Admin — manage orders, tracking & insights.</div>
+        <button class="logbtn" onclick="lockAdmin()">Lock</button>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="ml">Total Orders</div><div class="mv" id="mo">0</div><div class="ms">All time</div></div>
+        <div class="metric"><div class="ml">Monthly Revenue</div><div class="mv" id="mr">RM0</div><div class="ms">April 2025</div></div>
+        <div class="metric"><div class="ml">Pending</div><div class="mv" id="mp">0</div><div class="ms" style="color:var(--om)">Needs action</div></div>
+        <div class="metric"><div class="ml">Best Seller</div><div class="mv" id="mb" style="font-size:15px">—</div><div class="ms">This month</div></div>
+      </div>
+      <div class="atable">
+        <div class="ahead">Top Selling Products</div>
+        <div style="padding:12px;display:flex;flex-direction:column;gap:8px" id="bchart"></div>
+      </div>
+      <div class="atable">
+        <div class="ahead">All Orders</div>
+        <div style="overflow-x:auto">
+          <table><thead><tr><th>Order</th><th>Customer</th><th>Product</th><th>Total</th><th>Status</th><th>Tracking</th><th></th></tr></thead>
+          <tbody id="abody"></tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART BAR — Proceed to Order ONLY (no dupe) -->
+  <div class="cart-bar">
+    <div>
+      <div class="ccnt" id="ccnt">0 items</div>
+      <div class="ctotal" id="ctotal">RM0.00</div>
+    </div>
+    <button class="gbtn" id="gbtn" onclick="goCheckout()" disabled>Proceed to Order</button>
+  </div>
+</div>
+
+<script>
+const PW='Renkent2000!';
+let adminOn=false,taps=0,tapT=null;
+
+document.getElementById('logo').addEventListener('click',()=>{
+  taps++;clearTimeout(tapT);
+  if(taps>=5){taps=0;showSec('backend');}
+  else tapT=setTimeout(()=>taps=0,2000);
+});
+document.addEventListener('keydown',e=>{if(e.ctrlKey&&e.shiftKey&&e.key==='A')showSec('backend');});
+
+const PRODS=[
+  {id:'bunny',name:'PuffyBunny',ph:'🐰',cols:['#e5e7eb','#9ca3af','#d4b896','#fbcfe8'],cn:['White','Grey','Beige','Pink'],vs:[{s:'45cm',p:65},{s:'65cm',p:85}],em:null},
+  {id:'elephant',name:'LuluElephant',ph:'🐘',cols:['#9ca3af','#d4b896'],cn:['Grey','Beige'],vs:[{s:'70cm',p:55.99}],em:null},
+  {id:'stitch',name:'BooBoostitch',ph:'💙',cols:['#3b82f6','#ec4899'],cn:['Blue','Pink'],vs:[{s:'45cm',p:65.99}],em:null},
+  {id:'bear',name:'SugarBear',ph:'🐻',cols:['#f87171','#1d4ed8','#6b7280','#ec4899'],cn:['Lotso','Panda','Stitch','Pink'],vs:[{s:'40cm',p:65.99},{s:'50cm',p:83.99}],em:'Free embroidery on bib'},
+  {id:'sheep',name:'FluffySheep',ph:'🐏',cols:['#f1f5f9'],cn:['White'],vs:[{s:'60cm',p:85}],em:'Free embroidery on bib'},
+];
+
+/* Add-ons — Thread Color Upgrade is last and expands a colour picker */
+const ADDONS=[
+  {id:'bow',name:'Bow Ribbon',emoji:'🎀'},
+  {id:'flower',name:'Flower Bouquet',emoji:'💐'},
+  {id:'giftbag',name:'Gift Bag',emoji:'🛍️'},
+  {id:'perfume',name:'Baby Perfume',emoji:'✨'},
+  {id:'thread',name:'Thread Color Upgrade',emoji:'🪡'},
+];
+
+const TCOLS=[
+  {c:'#1e293b',l:'Black'},{c:'#dc2626',l:'Red'},{c:'#2563eb',l:'Blue'},
+  {c:'#16a34a',l:'Green'},{c:'#7c3aed',l:'Purple'},{c:'#db2777',l:'Pink'},
+  {c:'#d97706',l:'Gold'},{c:'#e5e7eb',l:'White'},{c:'#0891b2',l:'Teal'},
+  {c:'#9ca3af',l:'Silver'},{c:'#b45309',l:'Brown'},{c:'#6d28d9',l:'Violet'},
+];
+
+let ST={
+  sel:{},addons:{},emb:'1ear',del:0,threadCol:'#1e293b',
+  orders:[
+    {id:'PP-0001',customer:'Nurul Ain',email:'nurul@email.com',product:'PuffyBunny 65cm (Pink)',total:85,status:'Delivered',tracking:'JT1234567890'},
+    {id:'PP-0002',customer:'Siti Rahmah',email:'siti@email.com',product:'LuluElephant 70cm (Grey)',total:55.99,status:'Shipped',tracking:'JT9876543210'},
+    {id:'PP-0003',customer:'Melissa Tan',email:'mel@email.com',product:'SugarBear 50cm (Panda)',total:83.99,status:'Processing',tracking:''},
+    {id:'PP-0004',customer:'Amirah Zain',email:'ami@email.com',product:'BooBoostitch 45cm (Pink)',total:65.99,status:'Pending',tracking:''},
+  ]
+};
+
+function buildProds(){
+  const g=document.getElementById('pgrid');g.innerHTML='';
+  PRODS.forEach(p=>{
+    ST.sel[p.id]={qty:{},col:p.cols[0]};
+    p.vs.forEach(v=>ST.sel[p.id].qty[v.s]=0);
+    const c=document.createElement('div');c.className='pcard';
+    const chips=p.cols.map((c2,i)=>`<div class="chip ${i===0?'on':''}" style="background:${c2}" id="ch-${p.id}-${i}" onclick="selCol('${p.id}',${i},event)" title="${p.cn[i]}"></div>`).join('');
+    const rows=p.vs.map(v=>`<div class="vrow" id="vr-${p.id}-${v.s.replace('cm','')}"><span class="vsize">${v.s}</span><span class="vprice">RM${v.p.toFixed(2)}</span><div class="vq"><button class="qb" onclick="chgQ('${p.id}','${v.s}',-1,event)">−</button><span class="qn" id="q-${p.id}-${v.s.replace('cm','')}">0</span><button class="qb" onclick="chgQ('${p.id}','${v.s}',1,event)">+</button></div></div>`).join('');
+    c.innerHTML=`<div class="pcard-ph">${p.ph}</div><div class="pb"><div class="pn">${p.name}</div>${p.em?`<div class="ps" style="color:#a855f7;font-weight:700">✨ ${p.em}</div>`:'<div class="ps">Personalised embroidery</div>'}<div class="variants">${rows}</div><div style="margin-top:10px"><div class="clbl">Color</div><div class="clrow">${chips}</div><div class="clbl" id="cn-${p.id}">${p.cn[0]}</div></div></div>`;
+    g.appendChild(c);
+  });
+}
+
+function chgQ(pid,s,d,e){
+  e.stopPropagation();
+  const n=Math.max(0,(ST.sel[pid].qty[s]||0)+d);
+  ST.sel[pid].qty[s]=n;
+  document.getElementById('q-'+pid+'-'+s.replace('cm','')).textContent=n;
+  upd();
+}
+function selCol(pid,i,e){
+  e.stopPropagation();
+  const p=PRODS.find(x=>x.id===pid);
+  ST.sel[pid].col=p.cols[i];
+  p.cols.forEach((_,j)=>{const el=document.getElementById('ch-'+pid+'-'+j);if(el)el.classList.toggle('on',i===j);});
+  const lb=document.getElementById('cn-'+pid);if(lb)lb.textContent=p.cn[i];
+}
+
+function selEmb(t){
+  ST.emb=t;
+  document.getElementById('e1').classList.toggle('on',t==='1ear');
+  document.getElementById('e2').classList.toggle('on',t==='2ear');
+  const w=document.getElementById('enames');
+  w.innerHTML=t==='2ear'
+    ?`<div class="n2row"><input class="emb-inp" id="ename1" placeholder="Name 1 (e.g. Mia)" maxlength="14" oninput="upd()"><input class="emb-inp" id="ename2" placeholder="Name 2 (e.g. Leo)" maxlength="14" oninput="upd()"></div>`
+    :`<input class="emb-inp" id="ename1" placeholder="Name to embroider (e.g. Mia)" maxlength="14" oninput="upd()">`;
+  upd();
+}
+
+function buildAddons(){
+  const g=document.getElementById('agrid');g.innerHTML='';
+  ADDONS.forEach(a=>{
+    ST.addons[a.id]=false;
+    const c=document.createElement('div');c.className='acard';c.id='ad-'+a.id;
+    let extra='';
+    if(a.id==='thread'){
+      const tswatches=TCOLS.map(tc=>`<div class="tcol ${tc.c===ST.threadCol?'on':''}" style="background:${tc.c}" title="${tc.l}" onclick="selThread('${tc.c}',event)"></div>`).join('');
+      extra=`<div class="thread-picker" id="tpicker"><div class="tp-label">Choose thread color</div><div class="tcolors">${tswatches}</div></div>`;
+    }
+    c.innerHTML=`<div class="aemoji">${a.emoji}</div><div class="aname">${a.name}</div><div class="aprice">+RM8</div>${extra}`;
+    c.addEventListener('click',()=>{
+      ST.addons[a.id]=!ST.addons[a.id];
+      c.classList.toggle('on',ST.addons[a.id]);
+      if(a.id==='thread'){
+        const pk=document.getElementById('tpicker');
+        if(pk) pk.classList.toggle('open',ST.addons[a.id]);
+      }
+      upd();
+    });
+    g.appendChild(c);
+  });
+}
+
+function selThread(col,e){
+  e.stopPropagation();
+  ST.threadCol=col;
+  document.querySelectorAll('.tcol').forEach(el=>el.classList.toggle('on',el.title===TCOLS.find(t=>t.c===col)?.l));
+  document.querySelectorAll('.tcol').forEach(el=>el.classList.remove('on'));
+  document.querySelectorAll('.tcol').forEach(el=>{if(el.style.background===col||el.getAttribute('title')===TCOLS.find(t=>t.c===col)?.l)el.classList.add('on');});
+}
+
+function selDel(z,cost){
+  ST.del=cost;
+  document.getElementById('dw').classList.toggle('on',z==='west');
+  document.getElementById('de').classList.toggle('on',z==='east');
+  upd();
+}
+
+function cartItems(){
+  const items=[];
+  PRODS.forEach(p=>{
+    const s=ST.sel[p.id];
+    p.vs.forEach(v=>{
+      const qty=s.qty[v.s]||0;
+      if(qty>0){
+        const cn=p.cn[p.cols.indexOf(s.col)]||'';
+        items.push({name:`${p.name} ${v.s}`,color:cn,price:v.p,qty,total:v.p*qty});
+      }
+    });
+  });
+  return items;
+}
+
+function upd(){
+  const items=cartItems();
+  const sub=items.reduce((s,i)=>s+i.total,0);
+  const ac=Object.values(ST.addons).filter(Boolean).length*8;
+  const ec=ST.emb==='2ear'?15:0;
+  const tot=sub+ac+ec+ST.del;
+  const tq=items.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('ctotal').textContent='RM'+tot.toFixed(2);
+  document.getElementById('ccnt').textContent=tq+' item'+(tq!==1?'s':'');
+  document.getElementById('gbtn').disabled=items.length===0;
+}
+
+/* goCheckout — only called from cart bar button */
+function goCheckout(){
+  buildSum();
+  showSec('checkout');
+  document.getElementById('succ').style.display='none';
+  document.getElementById('coform').style.display='block';
+}
+
+function buildSum(){
+  const items=cartItems();
+  const ac=Object.values(ST.addons).filter(Boolean).length*8;
+  const selA=ADDONS.filter(a=>ST.addons[a.id]);
+  const ec=ST.emb==='2ear'?15:0;
+  const sub=items.reduce((s,i)=>s+i.total,0);
+  const tot=sub+ac+ec+ST.del;
+  let html='';
+  items.forEach(i=>{html+=`<div class="oline"><span>${i.name} (${i.color}) ×${i.qty}</span><span>RM${i.total.toFixed(2)}</span></div>`;});
+  selA.forEach(a=>{
+    let detail='';
+    if(a.id==='thread'){const tc=TCOLS.find(t=>t.c===ST.threadCol);detail=tc?' ('+tc.l+')':('')}
+    html+=`<div class="oline"><span>${a.emoji} ${a.name}${detail}</span><span>RM8.00</span></div>`;
+  });
+  const n1=document.getElementById('ename1');
+  const n2=document.getElementById('ename2');
+  const en=(n1?n1.value:'')+((n2&&n2.value)?' & '+n2.value:'');
+  if(en) html+=`<div class="oline"><span>Embroidery "${en}" (${ST.emb==='2ear'?'2 ears':'1 ear'})</span><span>${ec>0?'+RM'+ec.toFixed(2):'FREE'}</span></div>`;
+  html+=`<div class="oline"><span>Delivery</span><span>${ST.del>0?'+RM'+ST.del.toFixed(2):'FREE'}</span></div>`;
+  html+=`<div class="oline tot"><span>Total</span><span>RM${tot.toFixed(2)}</span></div>`;
+  document.getElementById('sumlines').innerHTML=html;
+}
+
+function copyAcc(){
+  navigator.clipboard.writeText('12000059657').then(()=>{
+    const b=document.querySelector('.cpbtn');b.textContent='Copied!';setTimeout(()=>b.textContent='Copy',2000);
+  });
+}
+
+function prevUp(inp){
+  const f=inp.files[0];if(!f)return;
+  const pv=document.getElementById('upprev');
+  if(f.type.startsWith('image/')){const r=new FileReader();r.onload=e=>{pv.src=e.target.result;pv.style.display='block'};r.readAsDataURL(f);}
+  document.getElementById('uptxt').textContent=f.name;
+}
+
+/* submitOrder — only one button calls this */
+function submitOrder(){
+  const name=document.getElementById('cn').value.trim();
+  const email=document.getElementById('ce').value.trim();
+  const phone=document.getElementById('cp').value.trim();
+  const addr=document.getElementById('ca').value.trim();
+  if(!name||!email||!phone||!addr){alert('Please fill in all your details!');return;}
+  const items=cartItems();if(!items.length){alert('No items selected!');return;}
+  const id='PP-'+String(ST.orders.length+1).padStart(4,'0');
+  const ac=Object.values(ST.addons).filter(Boolean).length*8;
+  const ec=ST.emb==='2ear'?15:0;
+  const tot=items.reduce((s,i)=>s+i.total,0)+ac+ec+ST.del;
+  ST.orders.push({id,customer:name,email,product:items.map(i=>i.name).join(', '),total:parseFloat(tot.toFixed(2)),status:'Pending',tracking:''});
+  document.getElementById('succ').style.display='block';
+  document.getElementById('coform').style.display='none';
+}
+
+function trackOrd(){
+  const q=document.getElementById('tinput').value.trim().toLowerCase();
+  const o=ST.orders.find(x=>x.id.toLowerCase()===q||x.email.toLowerCase()===q);
+  document.getElementById('tres').style.display='none';
+  document.getElementById('tempty').style.display='none';
+  if(!o){document.getElementById('tempty').style.display='block';return;}
+  const sm={Pending:0,Processing:1,Shipped:2,Delivered:3};
+  const steps=['Order Received','Processing','Shipped','Delivered'];
+  const dates=['Just now','1-2 business days','3-5 business days','Completed'];
+  const cur=sm[o.status]??0;
+  document.getElementById('tid').textContent=o.id+' — '+o.product;
+  document.getElementById('tnum').textContent=o.tracking||'Not assigned yet';
+  const pc={Pending:'pp',Processing:'py',Shipped:'pb2',Delivered:'pg'};
+  document.getElementById('tpill').innerHTML=`<span class="pill ${pc[o.status]||'pp'}">${o.status}</span>`;
+  let tl='';
+  steps.forEach((s,i)=>{
+    const dn=i<cur,ac=i===cur;
+    tl+=`<div class="step"><div class="dcol"><div class="dot ${dn?'dn':ac?'ac':'pd'}">${dn?'✓':i+1}</div>${i<steps.length-1?`<div class="sl ${dn?'dn':''}"></div>`:''}</div><div class="si"><div class="slab" style="color:${dn?'var(--mm)':ac?'var(--pm)':'var(--tl)'}">${s}</div><div class="stm">${dn||ac?dates[i]:'Upcoming'}</div></div></div>`;
+  });
+  document.getElementById('ttl').innerHTML=tl;
+  document.getElementById('tres').style.display='block';
+}
+
+function unlock(){
+  const pw=document.getElementById('lpw').value;
+  if(pw===PW){adminOn=true;document.getElementById('alockwrap').style.display='none';document.getElementById('acont').style.display='block';refreshAdmin();}
+  else{document.getElementById('lerr').style.display='block';document.getElementById('lpw').value='';}
+}
+function lockAdmin(){
+  adminOn=false;
+  document.getElementById('alockwrap').style.display='flex';
+  document.getElementById('acont').style.display='none';
+  document.getElementById('lpw').value='';
+  document.getElementById('lerr').style.display='none';
+}
+
+function refreshAdmin(){
+  document.getElementById('mo').textContent=ST.orders.length;
+  const rev=ST.orders.reduce((s,o)=>s+o.total,0);
+  document.getElementById('mr').textContent='RM'+rev.toFixed(0);
+  const pend=ST.orders.filter(o=>o.status==='Pending'||o.status==='Processing').length;
+  document.getElementById('mp').textContent=pend;
+  const pc={};PRODS.forEach(p=>pc[p.name]=0);
+  ST.orders.forEach(o=>PRODS.forEach(p=>{if(o.product.includes(p.name))pc[p.name]++;}));
+  const best=Object.entries(pc).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('mb').textContent=best?best[0]:'—';
+  const max=Math.max(...Object.values(pc),1);
+  const bc=['#f9a8d4','#c084fc','#93c5fd','#86efac','#fcd34d'];
+  document.getElementById('bchart').innerHTML=Object.entries(pc).map(([n,c],i)=>`<div class="brow"><div class="blbl">${n}</div><div class="btrack"><div class="bfill" style="width:${Math.round(c/max*100)}%;background:${bc[i%bc.length]}"></div></div><div class="bcnt">${c}</div></div>`).join('');
+  const pp={Pending:'pp',Processing:'py',Shipped:'pb2',Delivered:'pg'};
+  document.getElementById('abody').innerHTML=ST.orders.map(o=>`<tr><td style="font-weight:700;color:var(--pm)">${o.id}</td><td>${o.customer}</td><td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${o.product}</td><td style="font-weight:700">RM${o.total.toFixed(2)}</td><td><span class="pill ${pp[o.status]||'pp'}">${o.status}</span></td><td style="color:var(--sm);font-size:11px;font-weight:600">${o.tracking||'—'}</td><td><button class="ubtn" onclick="updOrd('${o.id}')">Update</button></td></tr>`).join('');
+}
+
+function updOrd(id){
+  const o=ST.orders.find(x=>x.id===id);if(!o)return;
+  const t=prompt(`Tracking for ${id}\nCurrent: "${o.tracking||'none'}"`,o.tracking||'');
+  if(t!==null)o.tracking=t;
+  const s=prompt(`Status for ${id}\nOptions: Pending / Processing / Shipped / Delivered\nCurrent: ${o.status}`,o.status);
+  if(s&&['Pending','Processing','Shipped','Delivered'].includes(s))o.status=s;
+  refreshAdmin();
+}
+
+function showSec(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sec-'+id).classList.add('on');
+  const m={shop:0,checkout:1,track:2};
+  if(m[id]!==undefined)document.querySelectorAll('.nbtn')[m[id]].classList.add('on');
+  if(id==='backend'&&adminOn)refreshAdmin();
+}
+
+buildProds();buildAddons();upd();
+</script>
